@@ -261,7 +261,7 @@ impl ActiveUnsized {
     pub(crate) fn layout(layout_inner: Layout) -> Layout {
         let layout_node = Layout::new::<Node<()>>();
         let (mut layout, _offset) = Layout::new::<*const AHeap>().extend(layout_inner).unwrap();
-        debug_assert_eq!(_offset as isize, Self::data_offset(), "this is real bad!");
+        debug_assert_eq!(0 - _offset as isize, Self::data_offset(), "this is real bad!");
         // round up to ensure we can fit a `Node`
         if layout_node.size() > layout.size() {
             layout = layout_node;
