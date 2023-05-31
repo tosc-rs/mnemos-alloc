@@ -273,15 +273,6 @@ impl ActiveUnsized {
         core::ptr::addr_of_mut!((*ptr).heap).write(heap);
     }
 
-    /// Obtain a pointer to the start of the unsized storage,
-    #[inline(always)]
-    pub(crate) unsafe fn data(this: NonNull<Self>, layout_inner: Layout) -> NonNull<()> {
-        let tptr = this.as_ptr();
-        let (_layout, offset) = Self::layout(layout_inner);
-        let daddr = tptr.cast::<u8>().add(offset);
-        NonNull::new_unchecked(daddr.cast::<()>())
-    }
-
     #[inline(always)]
     pub(crate) unsafe fn from_raw(data: NonNull<()>, layout_inner: Layout) -> NonNull<Self> {
         let (_layout, offset) = Self::layout(layout_inner);

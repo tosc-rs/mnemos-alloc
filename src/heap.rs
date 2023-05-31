@@ -483,7 +483,7 @@ impl HeapGuard {
         self.clean_allocs();
 
         // calculate the layout of the requested allocation
-        let (layout, _) = ActiveUnsized::layout(layout);
+        let (layout, offset) = ActiveUnsized::layout(layout);
 
         // Then, attempt to allocate the requested T.
         let nnu8 = self.get_heap().allocate_first_fit(layout)?;
@@ -491,8 +491,8 @@ impl HeapGuard {
 
         unsafe {
             ActiveUnsized::write_heap(ptr, self.aheap);
-
-            Ok(ActiveUnsized::data(ptr, layout))
+            let data_ptr = ptr.as_ptr().cast::<u8>().add(offset).cast::<()>();
+            Ok(NonNull::new_unchecked(data_ptr))
         }
     }
 }
