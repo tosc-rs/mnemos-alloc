@@ -10,7 +10,7 @@ use core::{
 
 use crate::{
     containers::{HeapArray, HeapBox, ArcInner, HeapArc, HeapFixedVec},
-    node::{self, Active, ActiveArr, Node, NodeRef, Recycle, ActiveUnsized},
+    node::{Active, ActiveArr, Node, NodeRef, Recycle, ActiveUnsized},
 };
 
 use cordyceps::mpsc_queue::{Links, MpscQueue};
